@@ -17,7 +17,7 @@ const verificationStatusSchema = new mongoose.Schema({
   }
 }, { _id: false });
 
-// Schema for proofs
+// Schema for proofs and documents
 const proofSchema = new mongoose.Schema({
   url: {
     type: String,
@@ -101,6 +101,39 @@ const jobApplicationSchema = new mongoose.Schema({
       default: () => ({})
     }
   },
+  address: {
+    type: String,
+    required: [true, "Address is Required!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
+  caste: {
+    type: String,
+    required: [true, "Caste is Required!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
+  gapYears: {
+    type: Number,
+    required: [true, "Gap Years are Required!"],
+    min: [0, "Gap Years Must Be At Least 0!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
+  careerPlans: {
+    type: String,
+    required: [true, "Career Plans are Required!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
   ssc: {
     type: Number,
     required: [true, "SSC Percentage is Required!"],
@@ -115,6 +148,14 @@ const jobApplicationSchema = new mongoose.Schema({
     type: proofSchema,
     required: [true, "SSC Proof is Required!"],
   },
+  sscSchool: {
+    type: String,
+    required: [true, "SSC School is Required!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
   hsc: {
     type: Number,
     required: [true, "HSC Percentage is Required!"],
@@ -128,6 +169,23 @@ const jobApplicationSchema = new mongoose.Schema({
   hscProof: {
     type: proofSchema,
     required: [true, "HSC Proof is Required!"],
+  },
+  hscSchool: {
+    type: String,
+    required: [true, "HSC School is Required!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
+  branch: {
+    type: String,
+    required: [true, "Branch is Required!"],
+    enum: ["Electrical", "Mechanical", "CSE", "Civil", "Electronics"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
   },
   projects: {
     type: String,
@@ -145,18 +203,9 @@ const jobApplicationSchema = new mongoose.Schema({
       default: () => ({})
     }
   },
-  branch: {
+  workExperience: {
     type: String,
-    required: [true, "Branch is Required!"],
-    enum: ["Electrical", "Mechanical", "CSE", "Civil", "Electronics"],
-    verification: {
-      type: verificationStatusSchema,
-      default: () => ({})
-    }
-  },
-  address: {
-    type: String,
-    required: [true, "Address is Required!"],
+    required: [true, "Work Experience is Required!"],
     verification: {
       type: verificationStatusSchema,
       default: () => ({})
@@ -170,6 +219,22 @@ const jobApplicationSchema = new mongoose.Schema({
       default: () => ({})
     }
   },
+  electiveSubjects: {
+    type: String,
+    required: [true, "Elective Subjects are Required!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
+  communicationLanguages: {
+    type: String,
+    required: [true, "Communication Languages are Required!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
   references: {
     type: String,
     required: [true, "References are Required!"],
@@ -177,6 +242,34 @@ const jobApplicationSchema = new mongoose.Schema({
       type: verificationStatusSchema,
       default: () => ({})
     }
+  },
+  research: {
+    type: String,
+    required: [true, "Research Details are Required!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
+  certifications: {
+    type: [proofSchema],
+    required: [true, "Certifications are Required!"],
+  },
+  workshops: {
+    type: [proofSchema],
+    required: [true, "Workshops are Required!"],
+  },
+  achievements: {
+    type: [proofSchema],
+    required: [true, "Achievements are Required!"],
+  },
+  resume: {
+    type: proofSchema,
+    required: [true, "Resume is Required!"],
+  },
+  idCard: {
+    type: proofSchema,
+    required: [true, "ID Card is Required!"],
   },
   status: {
     type: String,
@@ -187,6 +280,99 @@ const jobApplicationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  // Additional Fields
+  linkedinProfile: {
+    type: String,
+    validate: [validator.isURL, "Provide A Valid LinkedIn Profile URL!"]
+  },
+  githubProfile: {
+    type: String,
+    validate: [validator.isURL, "Provide A Valid GitHub Profile URL!"]
+  },
+  portfolio: {
+    type: String,
+    validate: [validator.isURL, "Provide A Valid Portfolio URL!"]
+  },
+  preferredLocation: {
+    type: String,
+    required: [true, "Preferred Job Location is Required!"]
+  },
+  noticePeriod: {
+    type: Number,
+    required: [true, "Notice Period (in days) is Required!"]
+  },
+  expectedSalary: {
+    type: Number,
+    required: [true, "Expected Salary is Required!"]
+  },
+  currentSalary: {
+    type: Number,
+    required: [true, "Current Salary is Required!"]
+  },
+  availability: {
+    type: String,
+    required: [true, "Availability is Required!"],
+    enum: ["Immediate", "Within 1 Month", "Within 3 Months"]
+  },
+  certifications: {
+    type: [proofSchema],
+    required: [true, "Certifications are Required!"]
+  },
+  awards: {
+    type: [proofSchema],
+    required: [true, "Awards are Required!"]
+  },
+  hobbies: {
+    type: String,
+    required: [true, "Hobbies are Required!"]
+  },
+  extraCurricularActivities: {
+    type: String,
+    required: [true, "Extra Curricular Activities are Required!"]
+  },
+  patents: {
+    type: String,
+    required: [true, "Patents are Required!"]
+  },
+  professionalMemberships: {
+    type: String,
+    required: [true, "Professional Memberships are Required!"]
+  },
+  languagesKnown: {
+    type: String,
+    required: [true, "Languages Known are Required!"]
+  },
+  maritalStatus: {
+    type: String,
+    required: [true, "Marital Status is Required!"],
+    enum: ["Single", "Married", "Divorced", "Widowed"]
+  },
+  nationality: {
+    type: String,
+    required: [true, "Nationality is Required!"]
+  },
+  passportNumber: {
+    type: String,
+    required: [true, "Passport Number is Required!"],
+    minLength: [8, "Passport Number Must Be At Least 8 Characters!"],
+    maxLength: [9, "Passport Number Must Be No More Than 9 Characters!"],
+    verification: {
+      type: verificationStatusSchema,
+      default: () => ({})
+    }
+  },
+  visaStatus: {
+    type: String,
+    required: [true, "Visa Status is Required!"]
+  },
+  drivingLicense: {
+    type: proofSchema,
+    required: [true, "Driving License Proof is Required!"],
+  },
+  disability: {
+    type: String,
+    required: [true, "Disability Details are Required!"]
+  }
 });
 
 export const JobApplication = mongoose.model("JobApplication", jobApplicationSchema);
