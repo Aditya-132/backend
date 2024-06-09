@@ -340,7 +340,7 @@ export const updateJobApplication = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-export const getJobApplication = catchAsyncErrors(async (req, res, next) => {
+export const getJobApplicationDetail = catchAsyncErrors(async (req, res, next) => {
   const { reg } = req.params;  // Extracting reg from request parameters
   const jobApplication = await JobApplication.findOne({ reg });  // Finding the application by reg
   if (!jobApplication) {
