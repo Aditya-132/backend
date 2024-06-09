@@ -387,3 +387,14 @@ export const deleteJobApplication = catchAsyncErrors(async (req, res, next) => {
     message: "Job Application Deleted Successfully!",
   });
 });
+export const getJobApplicationByEmail = catchAsyncErrors(async (req, res, next) => {
+  const { email } = req.params;
+  const jobApplication = await JobApplication.findOne({ email });
+  if (!jobApplication) {
+    return next(new ErrorHandler("Job Application Not Found!", 404));
+  }
+  res.status(200).json({
+    success: true,
+    jobApplication,
+  });
+});
