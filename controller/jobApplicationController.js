@@ -341,8 +341,8 @@ export const updateJobApplication = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const getJobApplication = catchAsyncErrors(async (req, res, next) => {
-  const { id } = req.params;
-  const jobApplication = await JobApplication.findById(id);
+  const { reg } = req.params;  // Extracting reg from request parameters
+  const jobApplication = await JobApplication.findOne({ reg });  // Finding the application by reg
   if (!jobApplication) {
     return next(new ErrorHandler("Job Application Not Found!", 404));
   }
@@ -351,6 +351,7 @@ export const getJobApplication = catchAsyncErrors(async (req, res, next) => {
     jobApplication,
   });
 });
+
 
 export const getAllJobApplications = catchAsyncErrors(async (req, res, next) => {
   const jobApplications = await JobApplication.find();
